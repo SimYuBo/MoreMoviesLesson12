@@ -12,7 +12,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class MovieList extends AppCompatActivity {
-    Button btnFilter;
+    Button btnFilter, btnBack;
     ArrayList<Movie> alMovie;
     ListView lvMovie;
     CustomAdapter caSong;
@@ -23,6 +23,7 @@ public class MovieList extends AppCompatActivity {
         setContentView(R.layout.activity_movie_list);
 
         btnFilter = findViewById(R.id.btnFilter);
+        btnBack = findViewById(R.id.btnBack);
         lvMovie= findViewById(R.id.lvMovie);
         alMovie = new ArrayList<>();
         caSong = new CustomAdapter(this, R.layout.row, alMovie);
@@ -54,6 +55,13 @@ public class MovieList extends AppCompatActivity {
                         ModifyMovie.class);
                 i.putExtra("data", data);
                 startActivity(i);
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

@@ -17,6 +17,7 @@
     <string name="btnUpdate">Update</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
+    <string name="back">Back</string>
     <string-array name="ratings">
         <item>G</item>
         <item>PG</item>

@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class ModifyMovie extends AppCompatActivity {
 
@@ -43,7 +44,8 @@ public class ModifyMovie extends AppCompatActivity {
         etGenre.setText(data.getGenre());
         etYear.setText(String.valueOf(data.getYear()));
 
-        spnRating.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spnRating
+                .setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
@@ -84,15 +86,28 @@ public class ModifyMovie extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 DBHelper dbh = new DBHelper(ModifyMovie.this);
-                data.setTitle(etTitle.getText().toString());
-                data.setGenre(etGenre.getText().toString());
-                data.setYear(Integer.parseInt(etYear.getText().toString()));
-                data.setRating(rating);
-                dbh.updateMovie(data);
-                dbh.close();
-                finish();
+                String title = etTitle.getText().toString();
+                String genre = etGenre.getText().toString();
+                int year = 0;
+                if (etYear.getText().toString().isEmpty()) {
+                    Toast.makeText(ModifyMovie.this, "Year is empty",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    year = Integer.parseInt(etYear.getText().toString());
+                }
+                if (title.isEmpty() || genre.isEmpty() || year > 2022 || year < 1960){
+                    Toast.makeText(ModifyMovie.this, "Update unsuccessful",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    data.setTitle(title);
+                    data.setGenre(genre);
+                    data.setYear(year);
+                    data.setRating(rating);
+                    dbh.updateMovie(data);
+                    dbh.close();
+                    finish();
+                }
             }
         });
 
@@ -125,7 +140,7 @@ public class ModifyMovie extends AppCompatActivity {
                 myBuilder.setTitle("Discard Changes?");
                 myBuilder.setMessage("Are you sure you want to discard changes?");
 
-                myBuilder.setPositiveButton("Do not discard", new DialogInterface.OnClickListener() {
+                myBuilder.setPositiveButton("Discard", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int which) {
                         finish();

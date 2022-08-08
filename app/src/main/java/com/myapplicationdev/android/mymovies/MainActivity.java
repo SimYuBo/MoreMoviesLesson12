@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
                 String genre = etGenre.getText().toString();
                 int year = 0;
                 if (etYear.getText().toString().isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Year is empty",
+                            Toast.LENGTH_SHORT).show();
                 } else {
                     year = Integer.parseInt(etYear.getText().toString());
                 }
